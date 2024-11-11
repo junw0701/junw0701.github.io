@@ -186,14 +186,22 @@
       transform: scale(1.05);
     }
 
-    /* 그리드 레이아웃 */
+    /* 콘텐츠 레이아웃: 프로젝트와 커밋 로그를 좌우로 배치 */
+    .content-container {
+      display: flex;
+      gap: 40px;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    /* 프로젝트 그리드 */
     .grid {
+      flex: 2;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 25px;
-      padding: 60px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
       animation: fadeInUp 1.5s ease-out;
     }
 
@@ -310,10 +318,16 @@
 
     /* 커밋 로그 섹션 */
     .commits-section {
-      padding: 40px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
+      flex: 1;
+      max-width: 400px;
+      padding: 20px;
+      background: linear-gradient(135deg, #ffffff, #f9f9f9);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       animation: fadeInUp 1.5s ease-out;
+      position: sticky;
+      top: 100px;
+      height: fit-content;
     }
 
     .commits-section h2 {
@@ -340,6 +354,10 @@
       align-items: center;
       border-left: 5px solid #ff0000; /* 유튜브 레드 포인트 */
       transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .commit.today {
+      background-color: #e6ffe6; /* 연한 초록색 */
     }
 
     .commit:hover {
@@ -411,7 +429,7 @@
 
     /* 푸터 */
     .footer {
-      background-color: #24292e;
+      background: linear-gradient(135deg, #24292e, #1b1f23);
       padding: 30px 20px;
       text-align: center;
       box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
@@ -439,6 +457,11 @@
     @keyframes fadeInDown {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInLeft {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
     /* 반응형 디자인 */
@@ -469,6 +492,14 @@
         margin-left: 0;
         margin-right: 15px;
         margin-bottom: 10px;
+      }
+
+      .content-container {
+        flex-direction: column;
+      }
+
+      .commits-section {
+        max-width: 100%;
       }
 
       .grid {
@@ -552,18 +583,21 @@
       <h1>Welcome to My GitHub Projects</h1>
     </section>
 
-    <!-- 그리드 레이아웃 -->
-    <section id="projects" class="grid">
-      <!-- 프로젝트 카드가 여기에 삽입됩니다 -->
-    </section>
+    <!-- 콘텐츠 컨테이너: 프로젝트와 커밋 로그를 좌우로 배치 -->
+    <div class="content-container">
+      <!-- 그리드 레이아웃 (프로젝트) -->
+      <section id="projects" class="grid">
+        <!-- 프로젝트 카드가 여기에 삽입됩니다 -->
+      </section>
 
-    <!-- 커밋 로그 섹션 -->
-    <section class="commits-section">
-      <h2>Latest Commit Logs</h2>
-      <div id="commitLogs">
-        <!-- 커밋 로그가 여기에 삽입됩니다 -->
-      </div>
-    </section>
+      <!-- 커밋 로그 섹션 -->
+      <section class="commits-section">
+        <h2>Latest Commit Logs</h2>
+        <div id="commitLogs">
+          <!-- 커밋 로그가 여기에 삽입됩니다 -->
+        </div>
+      </section>
+    </div>
 
     <!-- 푸터 -->
     <footer class="footer">
@@ -577,6 +611,12 @@
   <script>
     // GitHub 사용자 이름
     const username = 'junw0701';
+
+    // 오늘 날짜 구하기 (연, 월, 일)
+    const today = new Date();
+    const todayYear = today.getFullYear();
+    const todayMonth = today.getMonth();
+    const todayDate = today.getDate();
 
     // 프로젝트 그리드에 저장소 데이터 추가
     fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
@@ -629,8 +669,18 @@
             .then(commits => {
               if (commits && commits.length > 0) {
                 const latestCommit = commits[0];
+                const commitDate = new Date(latestCommit.commit.author.date);
+                
+                // 오늘 날짜인지 확인
+                const isToday = (commitDate.getFullYear() === todayYear) &&
+                                (commitDate.getMonth() === todayMonth) &&
+                                (commitDate.getDate() === todayDate);
+
                 const commit = document.createElement('div');
                 commit.className = 'commit';
+                if (isToday) {
+                  commit.classList.add('today');
+                }
 
                 commit.innerHTML = `
                   <div class="avatar">
@@ -641,7 +691,7 @@
                     <p>Repository: <a href="${repo.html_url}" target="_blank">${repo.name}</a></p>
                   </div>
                   <div class="commit-date">
-                    ${new Date(latestCommit.commit.author.date).toLocaleString()}
+                    ${commitDate.toLocaleString()}
                   </div>
                 `;
                 commitLogsContainer.appendChild(commit);

@@ -18,9 +18,8 @@
 
     body {
       font-family: 'Roboto', sans-serif;
-      background-color: #f0f2f5;
+      background-color: #f9f9f9;
       color: #333;
-      line-height: 1.6;
       display: flex;
     }
 
@@ -37,6 +36,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      transition: width 0.3s;
     }
 
     .sidebar .profile {
@@ -49,6 +49,7 @@
       height: 100px;
       border-radius: 50%;
       margin-bottom: 15px;
+      border: 3px solid #ffffff;
     }
 
     .sidebar .profile h2 {
@@ -63,6 +64,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-top: 10px;
     }
 
     .sidebar .profile a i {
@@ -76,6 +78,7 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      background-color: #ffffff;
     }
 
     /* 네비게이션 바 */
@@ -86,7 +89,6 @@
       width: 100%;
       position: sticky;
       top: 0;
-      z-index: 100;
     }
 
     .navbar-container {
@@ -111,10 +113,16 @@
       color: #24292e;
       font-weight: 500;
       transition: color 0.3s;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-links a i {
+      margin-right: 5px;
     }
 
     .navbar-links a:hover {
-      color: #0366d6;
+      color: #ff0000; /* 유튜브 레드 */
     }
 
     /* 배너 섹션 */
@@ -132,6 +140,10 @@
     .banner h1 {
       font-size: 3em;
       text-align: center;
+      color: #ffffff;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
     }
 
     /* 그리드 레이아웃 */
@@ -153,6 +165,7 @@
       transition: transform 0.3s, box-shadow 0.3s;
       display: flex;
       flex-direction: column;
+      border: 1px solid #e0e0e0;
     }
 
     .card:hover {
@@ -164,6 +177,7 @@
       width: 100%;
       height: 180px;
       object-fit: cover;
+      background-color: #f0f0f0;
     }
 
     .card-content {
@@ -177,12 +191,18 @@
       font-size: 1.2em;
       margin-bottom: 10px;
       color: #24292e;
+      text-decoration: none;
+    }
+
+    .card-title:hover {
+      color: #ff0000; /* 유튜브 레드 */
     }
 
     .card-description {
       flex: 1;
       color: #555555;
       margin-bottom: 15px;
+      font-size: 0.95em;
     }
 
     .card-link {
@@ -192,16 +212,17 @@
     .card-link a {
       display: inline-block;
       padding: 10px 15px;
-      background-color: #0366d6;
+      background-color: #ff0000; /* 유튜브 레드 */
       color: #ffffff;
       text-decoration: none;
       border-radius: 4px;
       transition: background-color 0.3s;
       font-weight: 500;
+      font-size: 0.9em;
     }
 
     .card-link a:hover {
-      background-color: #024eaf;
+      background-color: #cc0000;
     }
 
     /* 커밋 로그 섹션 */
@@ -214,6 +235,9 @@
     .commits-section h2 {
       margin-bottom: 20px;
       color: #24292e;
+      font-size: 2em;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 10px;
     }
 
     .commit {
@@ -224,6 +248,7 @@
       margin-bottom: 15px;
       display: flex;
       align-items: center;
+      border-left: 4px solid #ff0000; /* 유튜브 레드 포인트 */
     }
 
     .commit .avatar {
@@ -234,6 +259,7 @@
       width: 50px;
       height: 50px;
       border-radius: 50%;
+      border: 2px solid #e0e0e0;
     }
 
     .commit .commit-info {
@@ -243,16 +269,24 @@
     .commit .commit-info h4 {
       margin-bottom: 5px;
       color: #0366d6;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .commit .commit-info h4:hover {
+      text-decoration: underline;
     }
 
     .commit .commit-info p {
       color: #555555;
       font-size: 0.9em;
+      margin-bottom: 5px;
     }
 
     .commit .commit-date {
       color: #999999;
       font-size: 0.8em;
+      white-space: nowrap;
     }
 
     /* 푸터 */
@@ -266,6 +300,7 @@
 
     .footer p {
       color: #555555;
+      font-size: 0.9em;
     }
 
     /* 반응형 디자인 */
@@ -277,6 +312,25 @@
       .main-content {
         margin-left: 200px;
         width: calc(100% - 200px);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .navbar-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar-links {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .navbar-links a {
+        margin-left: 0;
+        margin-right: 15px;
+        margin-bottom: 10px;
       }
     }
 
@@ -300,22 +354,17 @@
         font-size: 2em;
       }
 
-      .navbar-container {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .navbar-links {
-        margin-top: 10px;
-      }
-
-      .navbar-links a {
-        margin-left: 0;
-        margin-right: 15px;
-      }
-
       .card img {
         height: 150px;
+      }
+
+      .commit .commit-info h4 {
+        font-size: 0.9em;
+      }
+
+      .commit .commit-info p,
+      .commit .commit-date {
+        font-size: 0.8em;
       }
     }
   </style>
@@ -327,6 +376,7 @@
       <img src="https://github.com/junw0701.png" alt="Profile Picture">
       <h2>Junw0701</h2>
       <a href="https://github.com/junw0701" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+      <a href="https://www.linkedin.com/in/yourprofile" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
     </div>
   </aside>
 
@@ -337,7 +387,7 @@
       <div class="navbar-container">
         <a href="#" class="navbar-logo">Junw0701</a>
         <div class="navbar-links">
-          <a href="#projects">Projects</a>
+          <a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a>
           <a href="https://github.com/junw0701" target="_blank"><i class="fab fa-github"></i> GitHub</a>
           <a href="https://www.linkedin.com/in/yourprofile" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
         </div>
@@ -376,7 +426,7 @@
     const username = 'junw0701';
 
     // 프로젝트 그리드에 저장소 데이터 추가
-    fetch(`https://api.github.com/users/${username}/repos`)
+    fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
       .then(response => response.json())
       .then(data => {
         const grid = document.getElementById('projects');
@@ -390,11 +440,19 @@
             thumbnail = repo.homepage;
           }
 
+          // 저장소 언어 및 스타 수 추가
+          const language = repo.language ? `<span class="repo-language">${repo.language}</span>` : '';
+          const stars = `<span class="repo-stars"><i class="fas fa-star"></i> ${repo.stargazers_count}</span>`;
+
           card.innerHTML = `
             <img src="${thumbnail}" alt="${repo.name} Thumbnail">
             <div class="card-content">
-              <h3 class="card-title">${repo.name}</h3>
+              <a href="${repo.html_url}" target="_blank" class="card-title">${repo.name}</a>
               <p class="card-description">${repo.description || 'No description provided.'}</p>
+              <div class="card-info">
+                ${language}
+                ${stars}
+              </div>
               <div class="card-link">
                 <a href="${repo.html_url}" target="_blank"><i class="fas fa-external-link-alt"></i> View on GitHub</a>
               </div>
@@ -406,14 +464,14 @@
       .catch(error => console.error('Error fetching repositories:', error));
 
     // 커밋 로그 섹션에 커밋 데이터 추가
-    fetch(`https://api.github.com/users/${username}/repos`)
+    fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
       .then(response => response.json())
       .then(repos => {
         const commitLogsContainer = document.getElementById('commitLogs');
 
         // 각 저장소의 최신 커밋을 가져옵니다
         repos.forEach(repo => {
-          fetch(`https://api.github.com/repos/${username}/${repo.name}/commits`)
+          fetch(`https://api.github.com/repos/${username}/${repo.name}/commits?per_page=1`)
             .then(response => response.json())
             .then(commits => {
               if (commits && commits.length > 0) {
@@ -426,7 +484,7 @@
                     <img src="${latestCommit.author ? latestCommit.author.avatar_url : 'https://via.placeholder.com/50'}" alt="Author Avatar">
                   </div>
                   <div class="commit-info">
-                    <h4>${latestCommit.commit.message}</h4>
+                    <h4 title="${latestCommit.commit.message}">${latestCommit.commit.message.length > 50 ? latestCommit.commit.message.substring(0, 50) + '...' : latestCommit.commit.message}</h4>
                     <p>Repository: <a href="${repo.html_url}" target="_blank">${repo.name}</a></p>
                   </div>
                   <div class="commit-date">
@@ -440,6 +498,30 @@
         });
       })
       .catch(error => console.error('Error fetching repositories for commits:', error));
+
+    // 추가: 저장소 언어 및 스타 수 스타일링
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .card-info {
+        display: flex;
+        justify-content: flex-start;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+      .repo-language, .repo-stars {
+        background-color: #f1f1f1;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8em;
+        display: flex;
+        align-items: center;
+      }
+      .repo-stars i {
+        margin-right: 5px;
+        color: #ffcc00;
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
 </html>

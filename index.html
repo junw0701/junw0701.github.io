@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <title>Junw0701의 GitHub 프로젝트</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
     /* Reset 기본 스타일 */
     * {
@@ -18,7 +21,7 @@
 
     body {
       font-family: 'Roboto', sans-serif;
-      background-color: #f9f9f9;
+      background-color: #f0f4f8;
       color: #333;
       display: flex;
       overflow-x: hidden;
@@ -27,7 +30,7 @@
     /* 사이드바 */
     .sidebar {
       width: 250px;
-      background: linear-gradient(135deg, #24292e, #1b1f23);
+      background: linear-gradient(135deg, #1e3c72, #2a5298); /* 파란색 그라데이션 */
       color: #ffffff;
       min-height: 100vh;
       position: fixed;
@@ -66,7 +69,7 @@
     }
 
     .sidebar .profile h2:hover {
-      color: #ff0000;
+      color: #00aaff; /* 파란색 호버 효과 */
     }
 
     .sidebar .profile a {
@@ -86,7 +89,7 @@
     }
 
     .sidebar .profile a:hover {
-      color: #ff0000;
+      color: #00aaff;
     }
 
     .sidebar .profile a:hover i {
@@ -100,7 +103,7 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      background: linear-gradient(180deg, #ffffff, #f0f0f0);
+      background: linear-gradient(180deg, #ffffff, #f0f4f8);
       transition: margin-left 0.3s, width 0.3s;
     }
 
@@ -127,19 +130,19 @@
     .navbar-logo {
       font-size: 1.8em;
       font-weight: bold;
-      color: #24292e;
+      color: #1e3c72;
       text-decoration: none;
       transition: color 0.3s;
     }
 
     .navbar-logo:hover {
-      color: #ff0000;
+      color: #00aaff;
     }
 
     .navbar-links a {
       margin-left: 25px;
       text-decoration: none;
-      color: #24292e;
+      color: #1e3c72;
       font-weight: 500;
       transition: color 0.3s;
       display: flex;
@@ -152,7 +155,7 @@
     }
 
     .navbar-links a:hover {
-      color: #ff0000; /* 유튜브 레드 */
+      color: #00aaff; /* 파란색 호버 효과 */
     }
 
     .navbar-links a:hover i {
@@ -161,7 +164,7 @@
 
     /* 배너 섹션 */
     .banner {
-      background: linear-gradient(135deg, rgba(255,0,0,0.7), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1200x400') center/cover no-repeat;
+      background: linear-gradient(135deg, rgba(30, 60, 114, 0.7), rgba(42, 82, 152, 0.7)), url('https://via.placeholder.com/1200x400') center/cover no-repeat;
       height: 400px;
       display: flex;
       align-items: center;
@@ -194,6 +197,7 @@
       max-width: 1200px;
       margin: 0 auto;
       flex-wrap: wrap;
+      animation: fadeInUp 1.5s ease-out;
     }
 
     /* 프로젝트 그리드 */
@@ -202,7 +206,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 25px;
-      animation: fadeInUp 1.5s ease-out;
     }
 
     /* 카드 디자인 */
@@ -226,7 +229,7 @@
       width: 100%;
       height: 180px;
       object-fit: cover;
-      background-color: #f0f0f0;
+      background-color: #f0f4f8;
       transition: opacity 0.3s;
     }
 
@@ -244,13 +247,13 @@
     .card-title {
       font-size: 1.4em;
       margin-bottom: 10px;
-      color: #24292e;
+      color: #1e3c72;
       text-decoration: none;
       transition: color 0.3s;
     }
 
     .card-title:hover {
-      color: #ff0000; /* 유튜브 레드 */
+      color: #00aaff; /* 파란색 호버 효과 */
     }
 
     .card-description {
@@ -280,7 +283,7 @@
     }
 
     .repo-language {
-      background: linear-gradient(135deg, #ff4b2b, #ff416c);
+      background: linear-gradient(135deg, #1e90ff, #00aaff); /* 파란색 그라데이션 */
       color: #ffffff;
     }
 
@@ -302,7 +305,7 @@
     .card-link a {
       display: inline-block;
       padding: 10px 15px;
-      background: linear-gradient(135deg, #ff4b2b, #ff416c); /* 유튜브 레드 그라데이션 */
+      background: linear-gradient(135deg, #1e90ff, #00aaff); /* 파란색 그라데이션 */
       color: #ffffff;
       text-decoration: none;
       border-radius: 4px;
@@ -312,7 +315,7 @@
     }
 
     .card-link a:hover {
-      background: linear-gradient(135deg, #cc0000, #b30000);
+      background: linear-gradient(135deg, #005bb5, #004080);
       transform: translateY(-2px);
     }
 
@@ -332,7 +335,7 @@
 
     .commits-section h2 {
       margin-bottom: 30px;
-      color: #24292e;
+      color: #1e3c72;
       font-size: 2.5em;
       border-bottom: 3px solid #e0e0e0;
       padding-bottom: 10px;
@@ -341,7 +344,7 @@
     }
 
     .commits-section h2:hover {
-      color: #ff0000;
+      color: #00aaff;
     }
 
     .commit {
@@ -352,7 +355,7 @@
       margin-bottom: 20px;
       display: flex;
       align-items: center;
-      border-left: 5px solid #ff0000; /* 유튜브 레드 포인트 */
+      border-left: 5px solid #00aaff; /* 파란색 포인트 */
       transition: background-color 0.3s, transform 0.3s;
     }
 
@@ -361,7 +364,7 @@
     }
 
     .commit:hover {
-      background-color: #f9f9f9;
+      background-color: #f0f4f8;
       transform: translateY(-3px);
     }
 
@@ -389,14 +392,14 @@
 
     .commit .commit-info h4 {
       margin-bottom: 8px;
-      color: #0366d6;
+      color: #1e90ff;
       font-size: 1.1em;
       cursor: pointer;
       transition: color 0.3s;
     }
 
     .commit .commit-info h4:hover {
-      color: #ff0000; /* 유튜브 레드 */
+      color: #00aaff; /* 파란색 호버 효과 */
       text-decoration: underline;
     }
 
@@ -407,13 +410,13 @@
     }
 
     .commit .commit-info a {
-      color: #0366d6;
+      color: #1e90ff;
       text-decoration: none;
       transition: color 0.3s;
     }
 
     .commit .commit-info a:hover {
-      color: #ff0000;
+      color: #00aaff;
     }
 
     .commit .commit-date {
@@ -429,7 +432,7 @@
 
     /* 푸터 */
     .footer {
-      background: linear-gradient(135deg, #24292e, #1b1f23);
+      background: linear-gradient(135deg, #1e3c72, #2a5298); /* 파란색 그라데이션 */
       padding: 30px 20px;
       text-align: center;
       box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
@@ -606,7 +609,7 @@
   </div>
 
   <!-- Font Awesome Script -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-Vp6HfvV7m8kFXcLh/jijx72m5HfCjKAZC5+rw5q/2oXxujcqwrM3TmjK1PFSXn1P0x6gSPjE5VxXWZKIGdnkfw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script>
     // GitHub 사용자 이름
@@ -662,6 +665,9 @@
       .then(repos => {
         const commitLogsContainer = document.getElementById('commitLogs');
 
+        // 최신 10개 커밋을 저장할 배열
+        const latestCommits = [];
+
         // 각 저장소의 최신 커밋을 가져옵니다
         repos.forEach(repo => {
           fetch(`https://api.github.com/repos/${username}/${repo.name}/commits?per_page=1`)
@@ -669,32 +675,37 @@
             .then(commits => {
               if (commits && commits.length > 0) {
                 const latestCommit = commits[0];
-                const commitDate = new Date(latestCommit.commit.author.date);
-                
-                // 오늘 날짜인지 확인
-                const isToday = (commitDate.getFullYear() === todayYear) &&
-                                (commitDate.getMonth() === todayMonth) &&
-                                (commitDate.getDate() === todayDate);
+                latestCommits.push(latestCommit);
 
-                const commit = document.createElement('div');
-                commit.className = 'commit';
-                if (isToday) {
-                  commit.classList.add('today');
+                // 최대 10개의 커밋만 표시
+                if (latestCommits.length <= 10) {
+                  const commitDate = new Date(latestCommit.commit.author.date);
+                  
+                  // 오늘 날짜인지 확인
+                  const isToday = (commitDate.getFullYear() === todayYear) &&
+                                  (commitDate.getMonth() === todayMonth) &&
+                                  (commitDate.getDate() === todayDate);
+
+                  const commit = document.createElement('div');
+                  commit.className = 'commit';
+                  if (isToday) {
+                    commit.classList.add('today');
+                  }
+
+                  commit.innerHTML = `
+                    <div class="avatar">
+                      <img src="${latestCommit.author ? latestCommit.author.avatar_url : 'https://via.placeholder.com/60'}" alt="Author Avatar">
+                    </div>
+                    <div class="commit-info">
+                      <h4 title="${latestCommit.commit.message}">${latestCommit.commit.message.length > 50 ? latestCommit.commit.message.substring(0, 50) + '...' : latestCommit.commit.message}</h4>
+                      <p>Repository: <a href="${repo.html_url}" target="_blank">${repo.name}</a></p>
+                    </div>
+                    <div class="commit-date">
+                      ${commitDate.toLocaleString()}
+                    </div>
+                  `;
+                  commitLogsContainer.appendChild(commit);
                 }
-
-                commit.innerHTML = `
-                  <div class="avatar">
-                    <img src="${latestCommit.author ? latestCommit.author.avatar_url : 'https://via.placeholder.com/60'}" alt="Author Avatar">
-                  </div>
-                  <div class="commit-info">
-                    <h4 title="${latestCommit.commit.message}">${latestCommit.commit.message.length > 50 ? latestCommit.commit.message.substring(0, 50) + '...' : latestCommit.commit.message}</h4>
-                    <p>Repository: <a href="${repo.html_url}" target="_blank">${repo.name}</a></p>
-                  </div>
-                  <div class="commit-date">
-                    ${commitDate.toLocaleString()}
-                  </div>
-                `;
-                commitLogsContainer.appendChild(commit);
               }
             })
             .catch(error => console.error(`Error fetching commits for ${repo.name}:`, error));

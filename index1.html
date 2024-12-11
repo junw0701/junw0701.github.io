@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculate Sum</title>
+</head>
+<body>
+  <h1>Calculate Sum of Two Numbers</h1>
+  <form id="calcForm">
+    <label for="val1">Value 1:</label>
+    <input type="number" id="val1" name="val1" required>
+    <br>
+    <label for="val2">Value 2:</label>
+    <input type="number" id="val2" name="val2" required>
+    <br>
+    <button type="submit">Calculate</button>
+  </form>
+  <p id="result"></p>
+
+  <script>
+    document.getElementById('calcForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const val1 = document.getElementById('val1').value;
+      const val2 = document.getElementById('val2').value;
+
+      // Replace with your API Gateway URL
+      const apiUrl = 'https://<api-id>.execute-api.<region>.amazonaws.com/prod/calculate';
+
+      try {
+        const response = await fetch(`${apiUrl}?val1=${val1}&val2=${val2}`);
+        const result = await response.text();
+        document.getElementById('result').innerText = result;
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('result').innerText = 'Error occurred while calling the API.';
+      }
+    });
+  </script>
+</body>
+</html>

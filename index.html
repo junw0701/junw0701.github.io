@@ -23,13 +23,26 @@
       const val1 = document.getElementById('val1').value;
       const val2 = document.getElementById('val2').value;
 
-      // Replace with your API Gateway URL
+      // API Gateway URL을 정확하게 설정 (리소스 경로 포함)
       const apiUrl = 'https://damefn14ic.execute-api.ap-northeast-2.amazonaws.com/test-stage_202013088';
 
       try {
-        const response = await fetch(`${apiUrl}?val1=${val1}&val2=${val2}`);
-        const result = await response.text();
-        document.getElementById('result').innerText = result;
+        const response = await fetch(`${apiUrl}?val1=${val1}&val2=${val2}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json(); // 외부 JSON 파싱
+        const body = JSON.parse(data.body); // body 문자열 파싱
+        const result = body.result; // result 값 추출
+
+        document.getElementById('result').innerText = `Result: ${result}`;
       } catch (error) {
         console.error('Error:', error);
         document.getElementById('result').innerText = 'Error occurred while calling the API.';

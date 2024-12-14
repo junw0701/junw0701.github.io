@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Calculate Sum</title>
+  <title>두 숫자의 합 계산</title>
 </head>
 <body>
   <h1>두 숫자의 합 계산</h1>
@@ -24,22 +24,29 @@
       const val2 = document.getElementById('val2').value;
 
       // API Gateway URL을 정확하게 설정 (리소스 경로 포함)
-      const apiUrl = 'https://damefn14ic.execute-api.ap-northeast-2.amazonaws.com/test-stage/calculate';
+      const apiUrl = 'https://damefn14ic.execute-api.ap-northeast-2.amazonaws.com/test-stage_202013088/calculate';
 
       try {
+        console.log(`Sending request to API: ${apiUrl}?val1=${val1}&val2=${val2}`);
+
         const response = await fetch(`${apiUrl}?val1=${val1}&val2=${val2}`, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            // 'x-api-key': 'YOUR_API_KEY_HERE' // API 키가 필요한 경우 주석 해제 및 키 추가
           }
         });
+
+        console.log('Response status:', response.status);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data = await response.json(); // 외부 JSON 파싱
-        const result = data.result; // result 값 추출
+        const data = await response.json();
+        console.log('Response data:', data);
+
+        const result = data.result;
 
         document.getElementById('result').innerText = `Result: ${result}`;
       } catch (error) {

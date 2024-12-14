@@ -4,15 +4,15 @@
   <title>Calculate Sum</title>
 </head>
 <body>
-  <h1>Calculate Sum of Two Numbers</h1>
+  <h1>두 숫자의 합 계산</h1>
   <form id="calcForm">
-    <label for="val1">Value 1:</label>
+    <label for="val1">값 1:</label>
     <input type="number" id="val1" name="val1" required>
     <br>
-    <label for="val2">Value 2:</label>
+    <label for="val2">값 2:</label>
     <input type="number" id="val2" name="val2" required>
     <br>
-    <button type="submit">Calculate</button>
+    <button type="submit">계산</button>
   </form>
   <p id="result"></p>
 
@@ -24,7 +24,7 @@
       const val2 = document.getElementById('val2').value;
 
       // API Gateway URL을 정확하게 설정 (리소스 경로 포함)
-      const apiUrl = 'https://damefn14ic.execute-api.ap-northeast-2.amazonaws.com/test-stage_202013088';
+      const apiUrl = 'https://damefn14ic.execute-api.ap-northeast-2.amazonaws.com/test-stage/calculate';
 
       try {
         const response = await fetch(`${apiUrl}?val1=${val1}&val2=${val2}`, {
@@ -39,13 +39,12 @@
         }
 
         const data = await response.json(); // 외부 JSON 파싱
-        const body = JSON.parse(data.body); // body 문자열 파싱
-        const result = body.result; // result 값 추출
+        const result = data.result; // result 값 추출
 
         document.getElementById('result').innerText = `Result: ${result}`;
       } catch (error) {
         console.error('Error:', error);
-        document.getElementById('result').innerText = 'Error occurred while calling the API.';
+        document.getElementById('result').innerText = 'API 호출 중 오류가 발생했습니다.';
       }
     });
   </script>

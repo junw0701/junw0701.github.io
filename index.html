@@ -32,25 +32,47 @@
       color: var(--text-color);
       font-family: var(--font-family);
       display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+
+    /* 메인 컨테이너 */
+    .container {
+      display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      align-items: center;
+      width: 90%;
+      max-width: 800px;
+      background-color: var(--card-background);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
 
     /* 지도 컨테이너 스타일 */
     #map {
-      flex: 1;
-      border-bottom-left-radius: var(--border-radius);
-      border-bottom-right-radius: var(--border-radius);
+      width: 100%;
+      padding-bottom: 100%; /* 정사각형 비율 유지 */
+      position: relative;
+      border-radius: var(--border-radius);
       overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    #map > div {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
     }
 
     /* 날씨 정보 컨테이너 스타일 */
     #weatherInfo {
-      background-color: var(--card-background);
-      padding: 20px;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      text-align: center;
     }
 
     /* 날씨 정보 텍스트 스타일 */
@@ -89,17 +111,21 @@
   </style>
 </head>
 <body>
-  <!-- 지도 컨테이너 -->
-  <div id="map"></div>
+  <!-- 메인 컨테이너 -->
+  <div class="container">
+    <!-- 지도 컨테이너 -->
+    <div id="map"></div>
 
-  <!-- 날씨 정보 컨테이너 -->
-  <div id="weatherInfo">
-    <h2>날씨 정보</h2>
-    <p class="info" id="location">위치: 로딩 중...</p>
-    <p class="info" id="temperature">온도: 로딩 중...</p>
-    <p class="info" id="windspeed">풍속: 로딩 중...</p>
-    <p class="info" id="weathercode">날씨 코드: 로딩 중...</p>
-    <button id="getWeatherBtn">날씨 정보 가져오기</button>
+    <!-- 날씨 정보 컨테이너 -->
+    <div id="weatherInfo">
+      <h2>날씨 정보</h2>
+      <p class="info" id="ip">IP 주소: 로딩 중...</p>
+      <p class="info" id="location">위치: 로딩 중...</p>
+      <p class="info" id="temperature">온도: 로딩 중...</p>
+      <p class="info" id="windspeed">풍속: 로딩 중...</p>
+      <p class="info" id="weathercode">날씨: 로딩 중...</p>
+      <button id="getWeatherBtn">날씨 정보 가져오기</button>
+    </div>
   </div>
 
   <!-- Leaflet JS -->
@@ -108,16 +134,18 @@
   <!-- JavaScript 코드 -->
   <script>
     document.getElementById('getWeatherBtn').addEventListener('click', async () => {
+      const ipP = document.getElementById('ip');
       const locationP = document.getElementById('location');
       const temperatureP = document.getElementById('temperature');
       const windspeedP = document.getElementById('windspeed');
       const weathercodeP = document.getElementById('weathercode');
       
       // 초기화
-      locationP.textContent = '위치 정보: 로딩 중...';
+      ipP.textContent = 'IP 주소: 로딩 중...';
+      locationP.textContent = '위치: 로딩 중...';
       temperatureP.textContent = '온도: 로딩 중...';
       windspeedP.textContent = '풍속: 로딩 중...';
-      weathercodeP.textContent = '날씨 코드: 로딩 중...';
+      weathercodeP.textContent = '날씨: 로딩 중...';
       
       try {
         const apiUrl = 'https://n8kruqkbrh.execute-api.ap-northeast-2.amazonaws.com/prod/get-weather'; // 자신의 Invoke URL로 변경
@@ -136,14 +164,16 @@
         }
 
         const data = await response.json();
+        const ip = data.ip;
         const location = data.location;
         const weather = data.weather;
 
-        if (!location || !weather) {
+        if (!ip || !location || !weather) {
           throw new Error('잘못된 데이터 형식입니다.');
         }
 
         // 날씨 정보 업데이트
+        ipP.textContent = `IP 주소: ${ip}`;
         locationP.textContent = `위치: ${location.city}, ${location.country}`;
         temperatureP.textContent = `온도: ${weather.temperature}°C`;
         windspeedP.textContent = `풍속: ${weather.windspeed} km/h`;
@@ -153,6 +183,7 @@
         updateMap(location.latitude, location.longitude, location.city);
       } catch (error) {
         console.error('Error:', error);
+        ipP.textContent = '오류: IP 정보를 가져오는 데 실패했습니다.';
         locationP.textContent = '오류: 날씨 정보를 가져오는 데 실패했습니다.';
         temperatureP.textContent = '';
         windspeedP.textContent = '';
@@ -164,10 +195,9 @@
     // 지도 초기화
     const map = L.map('map').setView([37.5665, 126.9780], 13); // 기본 위치는 서울
 
-    // Dark Matter 타일 레이어 추가 (다크 테마)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
-      maxZoom: 19
+    // 기본 OpenStreetMap 타일 레이어 추가
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     let marker; // 마커 변수 선언

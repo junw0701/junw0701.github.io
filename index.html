@@ -33,14 +33,14 @@
       weathercodeP.textContent = '날씨 코드: 로딩 중...';
       
       try {
-        const apiUrl = 'https://xvu1izd54i.execute-api.ap-northeast-2.amazonaws.com/prod/get-weather'; // 자신의 Invoke URL로 변경
+        const apiUrl = 'https://n8kruqkbrh.execute-api.ap-northeast-2.amazonaws.com/prod/get-weather'; // 자신의 Invoke URL로 변경
 
         const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({}), // 본 프로젝트에서는 빈 JSON을 전송
+          body: JSON.stringify({}), // 필요한 경우 데이터 전송
         });
 
         if (!response.ok) {
@@ -51,6 +51,10 @@
         const data = await response.json();
         const location = data.location;
         const weather = data.weather;
+
+        if (!location || !weather) {
+          throw new Error('잘못된 데이터 형식입니다.');
+        }
 
         locationP.textContent = `위치: ${location.city}, ${location.country}`;
         temperatureP.textContent = `온도: ${weather.temperature}°C`;

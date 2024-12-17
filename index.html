@@ -4,7 +4,7 @@
   <title>현재 위치 날씨 정보</title>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-    button { padding: 10px 20px; font-size: 16px; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
     #weatherInfo { margin-top: 20px; }
     .info { font-size: 18px; margin: 5px 0; }
   </style>
@@ -33,7 +33,7 @@
       weathercodeP.textContent = '날씨 코드: 로딩 중...';
       
       try {
-        const apiUrl = 'https://l7rizcikla.execute-api.ap-northeast-2.amazonaws.com'; // 자신의 API 엔드포인트로 변경
+        const apiUrl = 'https://xvu1izd54i.execute-api.ap-northeast-2.amazonaws.com/prod/get-weather'; // 자신의 Invoke URL로 변경
 
         const response = await fetch(apiUrl, {
           method: 'POST',

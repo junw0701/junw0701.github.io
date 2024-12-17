@@ -2,23 +2,53 @@
 <html>
 <head>
   <title>현재 위치 날씨 정보</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
-    #weatherInfo { margin-top: 20px; }
-    .info { font-size: 18px; margin: 5px 0; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      height: 60vh; /* 화면의 60% 높이 */
+      width: 100%;
+    }
+    #weatherInfo {
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    .info {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-  <h1>현재 위치 날씨 정보</h1>
-  <button id="getWeatherBtn">날씨 정보 가져오기</button>
+  <!-- 지도 컨테이너 -->
+  <div id="map"></div>
+
+  <!-- 날씨 정보 컨테이너 -->
   <div id="weatherInfo">
-    <p class="info" id="location"></p>
-    <p class="info" id="temperature"></p>
-    <p class="info" id="windspeed"></p>
-    <p class="info" id="weathercode"></p>
+    <h2>날씨 정보</h2>
+    <p class="info" id="location">위치: 로딩 중...</p>
+    <p class="info" id="temperature">온도: 로딩 중...</p>
+    <p class="info" id="windspeed">풍속: 로딩 중...</p>
+    <p class="info" id="weathercode">날씨 코드: 로딩 중...</p>
+    <button id="getWeatherBtn">날씨 정보 가져오기</button>
   </div>
 
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- JavaScript 코드 -->
   <script>
     document.getElementById('getWeatherBtn').addEventListener('click', async () => {
       const locationP = document.getElementById('location');
@@ -56,10 +86,14 @@
           throw new Error('잘못된 데이터 형식입니다.');
         }
 
+        // 날씨 정보 업데이트
         locationP.textContent = `위치: ${location.city}, ${location.country}`;
         temperatureP.textContent = `온도: ${weather.temperature}°C`;
         windspeedP.textContent = `풍속: ${weather.windspeed} km/h`;
         weathercodeP.textContent = `날씨 코드: ${weather.weathercode}`;
+
+        // 지도 업데이트
+        updateMap(location.latitude, location.longitude, location.city);
       } catch (error) {
         console.error('Error:', error);
         locationP.textContent = '오류: 날씨 정보를 가져오는 데 실패했습니다.';
@@ -69,6 +103,32 @@
         alert(`오류: ${error.message}`);
       }
     });
+
+    // 지도 초기화
+    const map = L.map('map').setView([37.5665, 126.9780], 13); // 기본 위치는 서울
+
+    // OpenStreetMap 타일 레이어 추가
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    let marker; // 마커 변수 선언
+
+    // 지도 업데이트 함수
+    function updateMap(lat, lon, city) {
+      // 기존 마커가 있으면 제거
+      if (marker) {
+        map.removeLayer(marker);
+      }
+
+      // 새로운 마커 추가
+      marker = L.marker([lat, lon]).addTo(map)
+        .bindPopup(`${city}`)
+        .openPopup();
+
+      // 지도 뷰 업데이트
+      map.setView([lat, lon], 13);
+    }
   </script>
 </body>
 </html>

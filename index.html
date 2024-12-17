@@ -33,7 +33,7 @@
       weathercodeP.textContent = '날씨 코드: 로딩 중...';
       
       try {
-        const apiUrl = 'arn:aws:apigateway:ap-northeast-2::/apis/l7rizcikla/routes/u44wp0i'; // 자신의 API 엔드포인트로 변경
+        const apiUrl = 'https://l7rizcikla.execute-api.ap-northeast-2.amazonaws.com'; // 자신의 API 엔드포인트로 변경
 
         const response = await fetch(apiUrl, {
           method: 'POST',
